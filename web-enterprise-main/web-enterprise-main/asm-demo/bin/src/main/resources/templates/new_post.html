@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head >
+<body>
+	<div align="center">
+        <h1>Write new post</h1>
+        <br />
+        <form action="#" th:action="@{/save}" th:object="${posts}"
+            method="post">
+ 
+            <table border="0" cellpadding="10">
+            	<tr>             
+                    <td>title: </td>
+                    <td>
+                        <input type="text" th:field="*{title}"/>
+                    </td>
+                </tr>   
+                <tr>
+                    <td>logo1:</td>
+                    <td><input  th:field="*{logo}" /></td>
+                </tr>
+                <tr>
+                    <td>content:</td>
+                    <td><input type="text" th:field="*{content}" /></td>
+                </tr>
+                                         
+                <tr>
+                    <td colspan="2"><button type="submit">Save</button> </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+</body>
+</html>

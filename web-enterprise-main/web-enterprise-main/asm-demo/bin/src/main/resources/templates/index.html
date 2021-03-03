@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div sec:authorize="isAuthenticated()">
+    Welcome <b><span sec:authentication="name">Username</span></b>
+    &nbsp;
+    <i><span sec:authentication="principal.authorities">Roles</span></i>
+    
+    <form th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout" />
+</form>
+</div>
+<div align="center">
+    <h1>Product List</h1>
+    <a href="/new">Create New Product</a>
+    <br/><br/>
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>title</th>
+                <th>logo1</th>
+                <th>content</th>
+                <th sec:authorize="hasAnyAuthority('CREATOR', 'ADMIN')">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="post : ${listPosts}">
+                <td th:text="${post.idpost}">Product ID</td>
+                <td th:text="${post.title}">title</td>
+                <td th:text="${post.logo}">logo1</td>
+                <td th:text="${post.content}">content</td>
+                <td sec:authorize="hasAnyAuthority('MAKETER', 'ADMIN')">
+                	<a th:href="@{'/edit/' + ${post.idpost}}" >Edit</a>
+                	&nbsp;&nbsp;&nbsp;&nbsp;
+                	<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${post.idpost}}" >delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript" th:src="@{/abc.js}"></script>
+
+</body>
+</html>
